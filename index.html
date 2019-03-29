@@ -1,0 +1,73 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Psychic Game!</title>
+</head>
+<body>
+    <h1>The Psychic Game!</h1>
+    <div>
+        <p>Guess what letter I'm thinking of</p>
+        <p id="wins-text"></p>
+        <p id="losses-text"></p>
+        <p id="guesses-text"></p>
+        <p id="history-text"></p>
+    </div>
+
+    <script>
+
+        var computerChoices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+        var wins = 0;
+        var losses = 0;
+        var lives = 10;
+        var inputHistory = " ";        
+
+        var winstext =  document.getElementById("wins-text");
+        var lossestext = document.getElementById("losses-text");
+        var livestext = document.getElementById("guesses-text");
+        var historytext = document.getElementById("history-text");
+
+        function reset() {
+            wins = 0;
+            losses = 0;
+            lives = 10;
+            inputHistory = " ";
+        };
+
+        document.onkeyup = function(event) {
+
+            var letter = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+            console.log(letter);
+
+            var userLetter = event.key;
+            inputHistory += " "+userLetter;
+
+            if (userLetter === letter) {
+                alert("You got it!");
+                wins++;
+                lives = 10;
+                losses = 0;
+            } else {
+                alert("Guess Again");
+                losses++;
+                lives= lives-1;
+            };
+            
+            if (lives === 0) {
+                alert("Game Over!");
+                reset();
+            }
+            winstext.textContent ="Wins: " + wins.toString();
+            lossestext.textContent = "Losses: " + losses.toString();
+            livestext.textContent = "Guesses Left: " + lives.toString();
+            historytext.textContent = "Your Guesses so far: " + inputHistory.toString();
+        };
+        
+        while (lives === 0) {
+                alert("Game Over!");
+                reset();
+            };
+    </script>
+</body>
+</html>
